@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.enzoftware.androidiptv">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -14,12 +15,11 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".VideoPlayerActivity"></activity>
+        android:theme="@style/AppTheme"
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity
-            android:name=".TestActivity"
-            android:label="@string/title_activity_test"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".VideoPlayerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,6 +27,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".FullScreenVideoPlayerActivity" />
+
+        <service
+            android:name="com.enzoftware.androidiptv.service.MediaService"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
 </manifest>
