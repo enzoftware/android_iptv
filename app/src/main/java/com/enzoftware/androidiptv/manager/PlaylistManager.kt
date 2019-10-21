@@ -1,18 +1,18 @@
 package com.enzoftware.androidiptv.manager
 
+import MediaService
 import android.app.Application
 import com.devbrackets.android.exomedia.listener.VideoControlsButtonListener
-import com.devbrackets.android.exomediademo.data.MediaItem
-import com.devbrackets.android.exomediademo.playlist.VideoApi
-import com.devbrackets.android.exomediademo.service.MediaService
 import com.devbrackets.android.playlistcore.manager.ListPlaylistManager
+import com.enzoftware.androidiptv.m3u.ChannelItem
+import com.enzoftware.androidiptv.playlist.VideoApi
 
 /**
  * A PlaylistManager that extends the [ListPlaylistManager] for use with the
  * [MediaService] which extends [com.devbrackets.android.playlistcore.service.BasePlaylistService].
  */
 class PlaylistManager(application: Application) :
-    ListPlaylistManager<MediaItem>(application, MediaService::class.java) {
+    ListPlaylistManager<ChannelItem>(application, MediaService::class.java) {
 
     /**
      * Note: You can call [.getMediaPlayers] and add it manually in the activity,
@@ -44,8 +44,8 @@ class PlaylistManager(application: Application) :
      */
     private fun updateVideoControls(videoApi: VideoApi) {
         videoApi.videoView.videoControls?.let {
-            it.setPreviousButtonRemoved(false)
-            it.setNextButtonRemoved(false)
+            it.setPreviousButtonRemoved(true)
+            it.setNextButtonRemoved(true)
             it.setButtonListener(ControlsListener())
         }
     }
