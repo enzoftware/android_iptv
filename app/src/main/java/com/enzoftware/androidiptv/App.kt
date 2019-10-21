@@ -10,4 +10,7 @@ import com.enzoftware.androidiptv.manager.PlaylistManager
  */
 class App : Application() {
     val playlistManager: PlaylistManager by lazy { PlaylistManager(this) }
+    override fun onCreate() {
+        super.onCreate()
+    }
 }
