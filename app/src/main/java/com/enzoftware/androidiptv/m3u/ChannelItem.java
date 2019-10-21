@@ -5,17 +5,18 @@ import com.devbrackets.android.playlistcore.manager.BasePlaylistManager;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 
-public class ChannelItem implements PlaylistItem {
+public class ChannelItem implements PlaylistItem, Serializable {
     public int duration;
     public String name, url;
     public HashMap<String, String> metadata;
 
-    public ChannelItem() {
-        metadata = new HashMap<String, String>();
-    }
+//    public ChannelItem() {
+//        metadata = new HashMap<String, String>();
+//    }
 
     @Nullable
     @Override

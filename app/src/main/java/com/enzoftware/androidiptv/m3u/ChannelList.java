@@ -1,11 +1,13 @@
 package com.enzoftware.androidiptv.m3u;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
-public class ChannelList {
+public class ChannelList implements Serializable {
     public String name;
-    public ArrayList<ChannelItem> items;
-    public ArrayList<String> groups;
+    public List<ChannelItem> items;
+    public List<String> groups;
 
     public ChannelList() {
         items = new ArrayList<ChannelItem>();
