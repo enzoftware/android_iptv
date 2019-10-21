@@ -18,12 +18,13 @@ import com.enzoftware.androidiptv.m3u.ChannelList;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class ChannelListAdapter extends BaseAdapter implements Filterable {
     private Picasso picasso;
     private LayoutInflater mInflater;
-    private ArrayList<ChannelItem> originalChannelList, filteredChannelList;
+    private List<ChannelItem> originalChannelList, filteredChannelList;
     private Context mContext;
     private ChannelFilter filter = new ChannelFilter();
 
@@ -59,7 +60,7 @@ public class ChannelListAdapter extends BaseAdapter implements Filterable {
         ImageView logo = (ImageView) rowView.findViewById(R.id.channelLogo);
 
         name.setText(c.name);
-        picasso.load(c.metadata.get("tvg-logo")).resize(0, 130).into(logo);
+//        picasso.load(c.metadata.get("tvg-logo")).resize(0, 130).into(logo);
 
         return rowView;
     }
