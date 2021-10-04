@@ -30,8 +30,8 @@ public class ChannelListAdapter extends BaseAdapter implements Filterable {
 
     public ChannelListAdapter(@NonNull Context context, ChannelList cl) {
         mContext = context;
-        originalChannelList = cl.items;
-        filteredChannelList = cl.items;
+        originalChannelList = cl.getItems();
+        filteredChannelList = cl.getItems();
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         picasso = Picasso.get();
     }
@@ -59,7 +59,7 @@ public class ChannelListAdapter extends BaseAdapter implements Filterable {
         TextView name = (TextView) rowView.findViewById(R.id.channelName);
         ImageView logo = (ImageView) rowView.findViewById(R.id.channelLogo);
 
-        name.setText(c.name);
+        name.setText(c.getName());
 //        picasso.load(c.metadata.get("tvg-logo")).resize(0, 130).into(logo);
 
         return rowView;
@@ -79,7 +79,7 @@ public class ChannelListAdapter extends BaseAdapter implements Filterable {
             String searchString = constraint.toString().toLowerCase();
 
             for (ChannelItem ci : originalChannelList) {
-                if (ci.name.toLowerCase().contains(searchString)) {
+                if (ci.getName().toLowerCase().contains(searchString)) {
                     filteredChannelList.add(ci);
                 }
             }
