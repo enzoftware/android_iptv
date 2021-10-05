@@ -1,96 +1,73 @@
-package com.enzoftware.androidiptv.adapter;
+package com.enzoftware.androidiptv.adapter
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Filter;
-import android.widget.Filterable;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.content.Context
+import com.enzoftware.androidiptv.m3u.ChannelList
+import com.squareup.picasso.Picasso
+import android.view.LayoutInflater
+import android.view.View
+import com.enzoftware.androidiptv.m3u.ChannelItem
+import android.view.ViewGroup
+import android.widget.*
+import com.enzoftware.androidiptv.R
+import java.util.ArrayList
 
-import androidx.annotation.NonNull;
-
-import com.enzoftware.androidiptv.R;
-import com.enzoftware.androidiptv.m3u.ChannelItem;
-import com.enzoftware.androidiptv.m3u.ChannelList;
-import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.List;
-
-
-public class ChannelListAdapter extends BaseAdapter implements Filterable {
-    private Picasso picasso;
-    private LayoutInflater mInflater;
-    private List<ChannelItem> originalChannelList, filteredChannelList;
-    private Context mContext;
-    private ChannelFilter filter = new ChannelFilter();
-
-    public ChannelListAdapter(@NonNull Context context, ChannelList cl) {
-        mContext = context;
-        originalChannelList = cl.items;
-        filteredChannelList = cl.items;
-        mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        picasso = Picasso.get();
+class ChannelListAdapter(private val mContext: Context, cl: ChannelList) : BaseAdapter(),
+    Filterable {
+    private val picasso: Picasso
+    private val mInflater: LayoutInflater
+    private val originalChannelList: List<ChannelItem>
+    private var filteredChannelList: MutableList<ChannelItem>
+    private val filter = ChannelFilter()
+    override fun getCount(): Int {
+        return filteredChannelList.size
     }
 
-    @Override
-    public int getCount() {
-        return filteredChannelList.size();
+    override fun getItem(position: Int): Any {
+        return filteredChannelList[position]
     }
 
-    @Override
-    public Object getItem(int position) {
-        return filteredChannelList.get(position);
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
     }
 
-    @Override
-    public long getItemId(int position) {
-        return position;
+    override fun getView(position: Int, convertView: View, parent: ViewGroup): View {
+        val rowView = mInflater.inflate(R.layout.channel_list_row, parent, false)
+        val c = getItem(position) as ChannelItem
+        val name = rowView.findViewById<View>(R.id.channelName) as TextView
+        val logo = rowView.findViewById<View>(R.id.channelLogo) as ImageView
+        name.text = c.name
+        //        picasso.load(c.metadata.get("tvg-logo")).resize(0, 130).into(logo);
+        return rowView
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View rowView = mInflater.inflate(R.layout.channel_list_row, parent, false);
-        ChannelItem c = (ChannelItem) getItem(position);
-
-        TextView name = (TextView) rowView.findViewById(R.id.channelName);
-        ImageView logo = (ImageView) rowView.findViewById(R.id.channelLogo);
-
-        name.setText(c.name);
-//        picasso.load(c.metadata.get("tvg-logo")).resize(0, 130).into(logo);
-
-        return rowView;
+    override fun getFilter(): Filter {
+        return filter
     }
 
-    @Override
-    public Filter getFilter() {
-        return filter;
-    }
-
-    class ChannelFilter extends Filter {
-
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            FilterResults results = new FilterResults();
-            filteredChannelList = new ArrayList<ChannelItem>();
-            String searchString = constraint.toString().toLowerCase();
-
-            for (ChannelItem ci : originalChannelList) {
+    internal inner class ChannelFilter : Filter() {
+        override fun performFiltering(constraint: CharSequence): FilterResults {
+            val results = FilterResults()
+            filteredChannelList = ArrayList()
+            val searchString = constraint.toString().toLowerCase()
+            for (ci in originalChannelList) {
                 if (ci.name.toLowerCase().contains(searchString)) {
-                    filteredChannelList.add(ci);
+                    filteredChannelList.add(ci)
                 }
             }
-            results.count = filteredChannelList.size();
-            results.values = filteredChannelList;
-            return results;
+            results.count = filteredChannelList.size
+            results.values = filteredChannelList
+            return results
         }
 
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            notifyDataSetChanged();
+        override fun publishResults(constraint: CharSequence, results: FilterResults) {
+            notifyDataSetChanged()
         }
+    }
+
+    init {
+        originalChannelList = cl.items
+        filteredChannelList = cl.items
+        mInflater = mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        picasso = Picasso.get()
     }
 }
