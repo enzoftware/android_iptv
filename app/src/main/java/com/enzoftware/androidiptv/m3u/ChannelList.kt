@@ -1,19 +1,16 @@
-package com.enzoftware.androidiptv.m3u;
+package com.enzoftware.androidiptv.m3u
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import com.enzoftware.androidiptv.m3u.ChannelItem
+import java.io.Serializable
+import java.util.ArrayList
 
-public class ChannelList implements Serializable {
-    public String name;
-    public List<ChannelItem> items;
-    public List<String> groups;
-
-    public ChannelList() {
-        items = new ArrayList<ChannelItem>();
+class ChannelList : Serializable {
+    var name: String? = null
+    @JvmField
+    var items: MutableList<ChannelItem> = ArrayList()
+    var groups: List<String>? = null
+    fun add(item: ChannelItem) {
+        items.add(item)
     }
 
-    public void add(ChannelItem item) {
-        items.add(item);
-    }
 }
