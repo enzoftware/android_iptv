@@ -36,7 +36,6 @@ class ChannelListAdapter(private val mContext: Context, cl: ChannelList) : BaseA
         val name = rowView.findViewById<View>(R.id.channelName) as TextView
         val logo = rowView.findViewById<View>(R.id.channelLogo) as ImageView
         name.text = c.name
-        //        picasso.load(c.metadata.get("tvg-logo")).resize(0, 130).into(logo);
         return rowView
     }
 
