@@ -70,4 +70,5 @@ class ChannelListAdapter(private val mContext: Context, cl: ChannelList) : BaseA
         mInflater = mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         picasso = Picasso.get()
     }
+
 }
