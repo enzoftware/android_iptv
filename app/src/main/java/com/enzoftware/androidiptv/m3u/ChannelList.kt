@@ -13,5 +13,6 @@ class ChannelList : Serializable {
 
     init {
         items = ArrayList()
+
     }
 }
